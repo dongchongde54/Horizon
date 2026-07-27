@@ -14,7 +14,7 @@ COPY data ./data
 COPY .env.example .env.example
 
 # Install dependencies
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --extra openbb
 
 # Runtime data is mounted here; keep the image and process unprivileged.
 RUN useradd --create-home --uid 10001 horizon \
