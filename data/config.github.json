@@ -1,149 +1,313 @@
 {
   "version": "1.0",
   "ai": {
-    "provider": "deepseek",
-    "model": "deepseek-v4-flash",
-    "base_url": "https://api.deepseek.com",
-    "api_key_env": "DEEPSEEK_API_KEY",
+    "provider": "openai",
+    "model": "YOUR_MODEL_ID",
+    "api_key_env": "OPENAI_API_KEY",
+    "base_url": "${HORIZON_AI_BASE_URL}",
     "temperature": 0.3,
-    "max_tokens": 8192,
+    "max_tokens": 4096,
     "throttle_sec": 1,
-    "languages": [
-      "zh",
-      "en"
-    ],
-    "analysis_concurrency": 5,
-    "enrichment_concurrency": 5
+    "analysis_concurrency": 1,
+    "enrichment_concurrency": 1
+  },
+  "email": {
+    "enabled": true,
+    "smtp_server": "smtp.gmail.com",
+    "smtp_port": 465,
+    "smtp_username": null,
+    "imap_enabled": false,
+    "imap_server": "",
+    "imap_port": 993,
+    "email_address": "${EMAIL_ADDRESS}",
+    "password_env": "EMAIL_PASSWORD",
+    "sender_name": "每周全球与 SRE 情报",
+    "subscribe_keyword": "SUBSCRIBE",
+    "unsubscribe_keyword": "UNSUBSCRIBE"
   },
   "sources": {
     "github": [
       {
-        "type": "user_events",
-        "username": "karpathy",
-        "enabled": true
+        "type": "repo_releases",
+        "owner": "kubernetes",
+        "repo": "kubernetes",
+        "enabled": true,
+        "category": "sre-release"
       },
       {
         "type": "repo_releases",
-        "owner": "vllm-project",
-        "repo": "vllm",
-        "enabled": true
+        "owner": "prometheus",
+        "repo": "prometheus",
+        "enabled": true,
+        "category": "sre-release"
       },
       {
         "type": "repo_releases",
-        "owner": "sgl-project",
-        "repo": "sglang",
-        "enabled": true
+        "owner": "grafana",
+        "repo": "grafana",
+        "enabled": true,
+        "category": "sre-release"
       },
       {
         "type": "repo_releases",
-        "owner": "triton-lang",
-        "repo": "triton",
-        "enabled": true
+        "owner": "open-telemetry",
+        "repo": "opentelemetry-collector",
+        "enabled": true,
+        "category": "sre-release"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "cilium",
+        "repo": "cilium",
+        "enabled": true,
+        "category": "sre-release"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "argoproj",
+        "repo": "argo-cd",
+        "enabled": true,
+        "category": "sre-release"
+      },
+      {
+        "type": "repo_releases",
+        "owner": "helm",
+        "repo": "helm",
+        "enabled": true,
+        "category": "sre-release"
       }
     ],
     "hackernews": {
       "enabled": true,
       "fetch_top_stories": 30,
-      "min_score": 150
+      "min_score": 100,
+      "category": "ai-open-source"
     },
     "rss": [
+      {
+        "name": "BBC World",
+        "url": "https://feeds.bbci.co.uk/news/world/rss.xml",
+        "enabled": true,
+        "category": "world-news"
+      },
+      {
+        "name": "NASA JPL News",
+        "url": "https://www.jpl.nasa.gov/feeds/news/",
+        "enabled": true,
+        "category": "science-society"
+      },
+      {
+        "name": "Nature",
+        "url": "https://www.nature.com/nature.rss",
+        "enabled": true,
+        "category": "science-society"
+      },
       {
         "name": "Simon Willison",
         "url": "https://simonwillison.net/atom/everything/",
         "enabled": true,
-        "category": "ai-tools"
+        "category": "ai-open-source"
       },
       {
-        "name": "GitHub Trending - Daily",
-        "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/all.xml",
+        "name": "GitHub Engineering",
+        "url": "https://github.blog/engineering/feed/",
         "enabled": true,
-        "category": "github-trending"
+        "category": "ai-open-source"
       },
       {
-        "name": "Semianalysis",
-        "url": "https://newsletter.semianalysis.com/feed",
+        "name": "Kubernetes Blog",
+        "url": "https://kubernetes.io/feed.xml",
         "enabled": true,
-        "category": "semiconductors"
+        "category": "sre"
       },
       {
-        "name": "LWN.net",
-        "url": "https://lwn.net/headlines/full_text?key=${LWN_KEY}",
+        "name": "CNCF Blog",
+        "url": "https://www.cncf.io/feed/",
         "enabled": true,
-        "category": "linux-kernel"
+        "category": "sre"
+      },
+      {
+        "name": "OpenTelemetry Blog",
+        "url": "https://opentelemetry.io/blog/index.xml",
+        "enabled": true,
+        "category": "observability"
+      },
+      {
+        "name": "Cloudflare Blog",
+        "url": "https://blog.cloudflare.com/rss/",
+        "enabled": true,
+        "category": "infra"
       }
     ],
     "reddit": {
       "enabled": true,
+      "fetch_comments": 5,
       "subreddits": [
         {
-          "subreddit": "MachineLearning",
+          "subreddit": "sre",
           "enabled": true,
-          "sort": "hot",
-          "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60
+          "sort": "top",
+          "time_filter": "week",
+          "fetch_limit": 15,
+          "min_score": 5,
+          "category": "sre"
         },
         {
-          "subreddit": "LocalLLaMA",
+          "subreddit": "devops",
           "enabled": true,
-          "sort": "hot",
-          "time_filter": "day",
-          "fetch_limit": 10,
-          "min_score": 60
+          "sort": "top",
+          "time_filter": "week",
+          "fetch_limit": 15,
+          "min_score": 10,
+          "category": "sre"
+        },
+        {
+          "subreddit": "kubernetes",
+          "enabled": true,
+          "sort": "top",
+          "time_filter": "week",
+          "fetch_limit": 15,
+          "min_score": 10,
+          "category": "sre"
         }
       ],
-      "users": [],
-      "fetch_comments": 10
+      "users": []
     },
-    "telegram": {
+    "twitter": {
+      "enabled": false,
+      "users": [],
+      "fetch_limit": 10,
+      "category": "ai-open-source",
+      "fetch_reply_text": false,
+      "max_replies_per_tweet": 3,
+      "max_tweets_to_expand": 10,
+      "reply_min_likes": 5
+    },
+    "openbb": {
       "enabled": true,
-      "channels": [
+      "fetch_filings": false,
+      "filings_provider": "sec",
+      "watchlists": [
         {
-          "channel": "zaihuapd",
+          "name": "global-tech-and-markets",
           "enabled": true,
-          "fetch_limit": 20
+          "provider": "yfinance",
+          "fetch_limit": 25,
+          "category": "equities",
+          "symbols": [
+            "AAPL",
+            "MSFT",
+            "NVDA",
+            "GOOGL",
+            "AMZN",
+            "META",
+            "TSLA",
+            "ORCL",
+            "IBM",
+            "CRM",
+            "NET",
+            "DDOG"
+          ]
         }
       ]
+    },
+    "ossinsight": {
+      "enabled": true,
+      "period": "past_28_days",
+      "languages": [
+        "All",
+        "Go",
+        "Python",
+        "TypeScript",
+        "Rust"
+      ],
+      "keywords": [],
+      "min_stars": 20,
+      "max_items": 25,
+      "category": "oss-trending"
+    },
+    "gdelt": {
+      "enabled": true,
+      "query": "geopolitics OR elections OR conflict OR global economy OR trade OR energy OR climate OR public health",
+      "mode": "ArtList",
+      "max_records": 40,
+      "timespan": "7d",
+      "language": null,
+      "country": null,
+      "category": "world-news"
+    },
+    "google_news": {
+      "enabled": true,
+      "query": "science OR health OR medicine OR space OR energy OR climate OR environment",
+      "language": "en",
+      "country": "US",
+      "ceid": null,
+      "max_results": 35,
+      "category": "science-society"
     }
   },
   "filtering": {
-    "ai_score_threshold": 8.0,
-    "time_window_hours": 24
+    "ai_score_threshold": 6.0,
+    "time_window_hours": 168,
+    "max_items": 20,
+    "category_groups": {
+      "global": {
+        "name": "全球热点",
+        "limit": 5,
+        "categories": [
+          "world-news"
+        ]
+      },
+      "finance": {
+        "name": "财经市场",
+        "limit": 3,
+        "categories": [
+          "finance",
+          "equities"
+        ]
+      },
+      "science": {
+        "name": "科学与社会",
+        "limit": 3,
+        "categories": [
+          "science-society"
+        ]
+      },
+      "ai": {
+        "name": "AI 与开源",
+        "limit": 5,
+        "categories": [
+          "ai-open-source",
+          "oss-trending"
+        ]
+      },
+      "sre": {
+        "name": "SRE 专题",
+        "limit": 4,
+        "categories": [
+          "sre",
+          "sre-release",
+          "observability",
+          "infra"
+        ]
+      }
+    },
+    "default_group": "other",
+    "default_group_limit": null
   },
   "webhook": {
-    "enabled": true,
+    "enabled": false,
     "url_env": "HORIZON_WEBHOOK_URL",
-    "delivery": "summary_and_items",
-    "overview_position": "last",
-    "platform": "feishu",
-    "layout": "collapsible",
+    "delivery": "summary",
+    "overview_position": "first",
+    "platform": "generic",
+    "layout": "markdown",
     "fallback_layout": "markdown",
     "languages": [
       "zh"
     ],
     "request_body": {
-      "msg_type": "interactive",
-      "card": {
-        "schema": "2.0",
-        "config": {
-          "wide_screen_mode": true
-        },
-        "header": {
-          "title": {
-            "tag": "plain_text",
-            "content": "#{message_title}"
-          },
-          "template": "blue"
-        },
-        "body": {
-          "elements": [
-            {
-              "tag": "markdown",
-              "content": "#{summary}"
-            }
-          ]
-        }
-      }
+      "text": "#{message_title}\n\n#{summary}"
     },
     "headers": ""
   }
